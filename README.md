@@ -46,10 +46,11 @@ or directly initialize it with parameters. Direct parameters have precedence
 over file configuration.
 
 ```ruby
-lt_agent = Analytics::Agent.new(org_api_key: API_KEY,
-                                       entity: 'page_visits',
-                                       filters: filters,
-                                       usernames: usernames)
+lt_agent = Analytics::Agent.new(org_api_key: '[API_KEY]',
+                                org_secret_key: '[SECRET]'
+                                entity: 'page_visits',
+                                filters: filters,
+                                usernames: usernames)
 ```
 
 # Queries
