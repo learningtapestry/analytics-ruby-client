@@ -4,10 +4,13 @@ require 'analytics/configuration'
 
 module Analytics
   module Test
+    #
+    # Test for the Analytics Client configuration class
+    #
     class ConfigurationTest < Minitest::Test
       def test_initialize_loads_symbolized_hash_from_params
         assert_equal 'foo', Configuration.new(foo: 'foo').option(:foo)
-        assert_equal 'foo', Configuration.new({ 'foo' => 'foo'}).option(:foo)
+        assert_equal 'foo', Configuration.new('foo' => 'foo').option(:foo)
       end
 
       def test_initialize_loads_empty_file_config_when_specified_in_params

@@ -5,16 +5,20 @@ require 'analytics/client'
 
 module Analytics
   module Test
+    #
+    # Tests the Analytics Ruby client
+    #
     class ClientTest < Minitest::Test
       def test_initialize_sets_agent_options
-        agent = Agent.new(param_config)
+        agent = Agent.new(params)
 
-        assert_equal param_config[:org_api_key], agent.org_api_key
-        assert_equal param_config[:org_secret_key], agent.org_secret_key
-        assert_equal param_config[:entity], agent.entity
-        assert_equal param_config[:filters], agent.filters
-        assert_equal param_config[:usernames], agent.usernames
-        assert_equal param_config[:type], agent.type
+        expected = params.select do |k|
+          [:org_api_key, :org_secret_key, :filters].include?(k)
+        end
+
+        actual = [agent.org_api_key, agent.org_secret_key, agent.filters]
+
+        assert_equal expected.values, actual
       end
 
       def test_initialize_sets_some_defaults
@@ -22,12 +26,14 @@ module Analytics
 
         assert_equal 'https://api.learningtapestry.com', agent.api_base
         assert_equal true, agent.use_ssl
-        assert_equal Hash.new, agent.filters
-        assert_equal Array.new, agent.usernames
+        assert_instance_of Hash, agent.filters
+        assert_empty agent.filters
+        assert_instance_of Array, agent.usernames
+        assert_empty agent.usernames
       end
 
       def test_agent_provides_public_accessors_for_some_settings
-        agent = Agent.new(param_config)
+        agent = Agent.new(params)
 
         agent.org_api_key = 'a_custom_key'
         agent.org_secret_key = 'a custom secret'
@@ -57,9 +63,9 @@ module Analytics
       end
 
       def test_obtain
-        agent = Agent.new(param_config)
+        agent = Agent.new(params)
 
-        stub_request(:get, /#{agent.api_base}\/api\/v1\/obtain.*/)
+        stub_request(:get, %r{#{agent.api_base}/api/v1/obtain\.*})
           .to_return(body: { entity: 'site_visits' }.to_json)
 
         response = agent.obtain
@@ -68,10 +74,10 @@ module Analytics
       end
 
       def test_users
-        agent = Agent.new(param_config)
+        agent = Agent.new(params)
 
-        stub_request(:get, /#{agent.api_base}\/api\/v1\/users.*/)
-          .to_return(body: { results: [ { username: 'peter' } ] }.to_json)
+        stub_request(:get, %r{#{agent.api_base}/api/v1/users.*})
+          .to_return(body: { results: [{ username: 'peter' }] }.to_json)
 
         response = agent.users
         assert_equal 200, response[:status]
@@ -100,7 +106,7 @@ module Analytics
         EOF
       end
 
-      def param_config
+      def params
         {
           org_api_key: 'param_key',
           org_secret_key: 'param_secret',

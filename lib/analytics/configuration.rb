@@ -1,9 +1,9 @@
 require 'yaml'
 
-#
-# Analytics client configuration
-#
 module Analytics
+  #
+  # Analytics client configuration
+  #
   class Configuration
     #
     # Loads configuration hashes from both a params hash and a file
@@ -33,7 +33,7 @@ module Analytics
       return {} if params[:ignore_config_file]
 
       file = File.expand_path(params[:config_file] || 'analytics.yml', 'config')
-      return {} unless File.exists?(file)
+      return {} unless File.exist?(file)
 
       YAML.load_file(file)
     end

@@ -5,6 +5,10 @@ require 'json'
 require 'analytics/configuration'
 
 module Analytics
+  #
+  # Simplifies a request to the Analytics API by holding the parameters and
+  # constructing proper web requests.
+  #
   class Agent
     #
     # Attributes directly settable from outside the class
@@ -44,10 +48,9 @@ module Analytics
                  entity: entity,
                  type: type }
 
-      params[:date_begin] = filters[:date_begin] if filters[:date_begin]
-      params[:date_end] = filters[:date_end] if filters[:date_end]
-      params[:site_domains] = filters[:site_domains] if filters[:site_domains]
-      params[:page_urls] = filters[:page_urls] if filters[:page_urls]
+      %i(date_begin date_end site_domains page_urls).each do |filter|
+        params[filter] = filters[filter]
+      end
 
       api_request '/api/v1/obtain', params
     end
@@ -85,7 +88,7 @@ module Analytics
 
     def path_with_params(path, params)
       encoded_params = URI.encode_www_form(params)
-      [path, encoded_params].join("?")
+      [path, encoded_params].join('?')
     end
   end
 end
