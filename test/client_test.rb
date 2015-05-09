@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require 'test_helper'
 require 'webmock/minitest'
 
 require 'analytics/client'
