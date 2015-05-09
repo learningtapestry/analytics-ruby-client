@@ -86,26 +86,6 @@ module Analytics
 
       private
 
-      def test_config
-        <<-EOF.gsub(/^ {10}/, '')
-          org_api_key: file_key
-          org_secret_key: file_secret
-          usernames:
-            - file_user_1
-            - file_user_2
-          filters:
-            date_start: '2014-12-31'
-            date_end: '2015-12-31'
-        EOF
-      end
-
-      def minimal_file_config
-        <<-EOF
-          org_api_key: 00000000-0000-4000-8000-000000000000
-          org_secret_key: secret
-        EOF
-      end
-
       def params
         {
           org_api_key: 'param_key',
