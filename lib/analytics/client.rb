@@ -24,8 +24,8 @@ module Analytics
     def initialize(params = {})
       conf = Configuration.new(params)
 
-      @api_base = conf.option(:api_base) || 'https://api.learningtapestry.com'
-      @use_ssl = conf.option(:use_ssl) || true
+      @api_base = conf.option(:api_base) { 'https://api.learningtapestry.com' }
+      @use_ssl = conf.option(:use_ssl) { true }
       @org_api_key = conf.option(:org_api_key)
       @org_secret_key = conf.option(:org_secret_key)
       @entity = conf.option(:entity)

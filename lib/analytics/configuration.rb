@@ -19,7 +19,9 @@ module Analytics
     # the file configuration, otherwise.
     #
     def option(key)
-      @params[key] || @config[key]
+      @params.fetch(key) do
+        @config.fetch(key) { yield if block_given? }
+      end
     end
 
     private
