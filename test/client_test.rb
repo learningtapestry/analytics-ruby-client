@@ -62,10 +62,11 @@ module Analytics
         assert_equal expected_filters, agent.filters
       end
 
-      def test_obtain
+      def test_sites
         agent = Agent.new(params)
+        agent.entity = 'site_visits'
 
-        stub_request(:get, %r{#{agent.api_base}/api/v1/obtain\.*})
+        stub_request(:get, %r{#{agent.api_base}/api/v2/sites\.*})
           .to_return(body: { entity: 'site_visits' }.to_json)
 
         response = agent.obtain
@@ -73,10 +74,22 @@ module Analytics
         assert_equal 'site_visits', response[:entity]
       end
 
+      def test_pages
+        agent = Agent.new(params)
+        agent.entity = 'page_visits'
+
+        stub_request(:get, %r{#{agent.api_base}/api/v2/pages\.*})
+          .to_return(body: { entity: 'page_visits' }.to_json)
+
+        response = agent.obtain
+        assert_equal 200, response[:status]
+        assert_equal 'page_visits', response[:entity]
+      end
+
       def test_users
         agent = Agent.new(params)
 
-        stub_request(:get, %r{#{agent.api_base}/api/v1/users.*})
+        stub_request(:get, %r{#{agent.api_base}/api/v2/users.*})
           .to_return(body: { results: [{ username: 'peter' }] }.to_json)
 
         response = agent.users

@@ -75,7 +75,7 @@ lt_agent = Analytics::Agent.new
 lt_agent.org_api_key = '[API_KEY]'
 lt_agent.org_secret_key = '[SECRET]'
 lt_agent.entity = 'site_visits' # or page_visits
-lt_agent.usernames = [ 'joesmith@foo.com' ] # Array of usernames
+lt_agent.add_username 'joesmith@foo.com' # Add to usernames array
 
 response = lt_agent.obtain
 puts response[:status]  # = HTTP status code, 200

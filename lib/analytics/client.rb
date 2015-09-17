@@ -38,21 +38,20 @@ module Analytics
     def users
       params = { org_api_key: org_api_key, org_secret_key: org_secret_key }
 
-      api_request '/api/v1/users', params
+      api_request '/api/v2/users', params
     end
 
     def obtain
       params = { org_api_key: org_api_key,
                  org_secret_key: org_secret_key,
-                 usernames: usernames,
+                 usernames: usernames.join(','),
                  entity: entity,
                  type: type }
 
-      %i(date_begin date_end site_domains page_urls).each do |filter|
-        params[filter] = filters[filter]
-      end
+      params.merge!(process_filters)
 
-      api_request '/api/v1/obtain', params
+      endpoint = entity == 'site_visits' ? 'sites' : 'pages'
+      api_request "/api/v2/#{endpoint}", params
     end
 
     def add_filter(key, value)
@@ -64,6 +63,20 @@ module Analytics
     end
 
     private
+
+    def process_filters
+      processed_filters = {}
+
+      %i(date_begin date_end).each do |filter|
+        processed_filters[filter] = filters[filter]
+      end
+
+      %i(site_domains page_urls).each do |filter|
+        processed_filters[filter] = filters[filter].join(',') if filters[filter]
+      end
+
+      processed_filters
+    end
 
     def api_request(path, params)
       uri = URI("#{@api_base}#{path}")
