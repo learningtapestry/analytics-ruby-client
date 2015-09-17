@@ -46,7 +46,9 @@ or directly initialize it with parameters. Direct parameters have precedence
 over file configuration.
 
 ```ruby
-lt_agent = Analytics::Agent.new(org_api_key: '[API_KEY]',
+lt_agent = Analytics::Agent.new(api_base: '[API_BASE_URL]', # Defaults to https://api.learningtapestry.com
+                                use_ssl: [true|false], # Defaults to true
+                                org_api_key: '[API_KEY]',
                                 org_secret_key: '[SECRET]'
                                 entity: 'page_visits',
                                 filters: filters,
@@ -94,8 +96,8 @@ Optionally, the following filters may be used:
 ```ruby
 lt_agent.add_filter :date_begin, '2014-10-01'
 lt_agent.add_filter :date_end, '2014-10-31'
-lt_agent.add_filter :site_domains, 'google.com'
-lt_agent.add_filter :page_urls, 'http://mail.google.com'
+lt_agent.add_filter :site_domains, ['google.com'] # Array of site domains
+lt_agent.add_filter :page_urls, ['http://mail.google.com'] # Array of page urls
 ```
 
 # Result Examples
@@ -108,13 +110,13 @@ Site Vists - Summary:
     :site_visits=>
      [{:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
-       :time_active=>"00:02:03"},
+       :total_time=>123},
       {:site_name=>"Stack Overflow",
        :site_domain=>"stackoverflow.com",
-       :time_active=>"23:36:24"},
+       :total_time=>1459},
       {:site_name=>"TechCrunch",
        :site_domain=>"techcrunch.com",
-       :time_active=>"00:05:57"}]}],
+       :total_time=>57}]}],
  :entity=>"site_visits",
  :date_range=>
   {:date_begin=>"2014-10-01T00:00:00",
@@ -130,20 +132,24 @@ Site Visits - Detail:
     :site_visits=>
      [{:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
-       :time_active=>"00:00:58",
-       :date_visited=>"2014-10-12"},
+       :total_time=>58,
+       :date_visited=>"2014-10-12T15:57:31.000Z",
+       :date_left=>"2014-10-12T15:58:29.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
-       :time_active=>"00:01:05",
-       :date_visited=>"2014-10-13"},
+       :total_time=>65,
+       :date_visited=>"2014-10-13T15:57:31.000Z",
+       :date_left=>"2014-10-13T15:58:35.000Z"},
       {:site_name=>"Gizmodo",
        :site_domain=>"gizmodo.com",
-       :time_active=>"00:00:50",
-       :date_visited=>"2014-10-14"},
+       :total_time=>50,
+       :date_visited=>"2014-10-14T15:57:31.000Z",
+       :date_left=>"2014-10-14T15:58:21.000Z"},
       {:site_name=>"Slashdot",
        :site_domain=>"slashdot.org",
-       :time_active=>"00:00:05",
-       :date_visited=>"2014-10-12"}}],
+       :total_time=>5,
+       :date_visited=>"2014-10-12T15:57:31.000Z",
+       :date_left=>"2014-10-12T15:57:36.000Z"}}],
  :entity=>"site_visits",
  :date_range=>
   {:date_begin=>"2014-10-01T00:00:00",
@@ -161,24 +167,24 @@ Page Visits - Summary:
        :site_domain=>"arstechnica.com",
        :page_name=>"Ars Technica",
        :page_url=>"http://arstechnica.com/",
-       :time_active=>"00:00:08"},
+       :total_time=>8},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>
         "Former NSA director had thousands personally invested | Ars Technica",
        :page_url=>
         "http://arstechnica.com/tech-policy/2014/10/former-nsa-director-had",
-       :time_active=>"00:00:30"},
+       :total_time=>30},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>"Law & Disorder | Ars Technica",
        :page_url=>"http://arstechnica.com/tech-policy/",
-       :time_active=>"00:00:07"},
+       :total_time=>7},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>"Ministry of Innovation | Ars Technica",
        :page_url=>"http://arstechnica.com/business/",
-       :time_active=>"00:00:19"}]}],
+       :total_time=>19}]}],
  :entity=>"page_visits",
  :date_range=>
   {:date_begin=>"2014-10-11T00:00:00.000+00:00",
@@ -197,40 +203,46 @@ Page Visits - Detail:
        :site_domain=>"arstechnica.com",
        :page_name=>"Ars Technica",
        :page_url=>"http://arstechnica.com/",
-       :time_active=>"00:00:03",
-       :date_visited=>"2014-10-12T20:33:00.000Z"},
+       :total_time=>3,
+       :date_visited=>"2014-10-12T20:33:00.000Z",
+       :date_left=>"2014-10-12T20:36:00.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>"Technology Lab | Ars Technica",
        :page_url=>"http://arstechnica.com/information-technology/",
-       :time_active=>"00:00:18",
-       :date_visited=>"2014-10-12T20:33:00.000Z"},
+       :total_time=>18,
+       :date_visited=>"2014-10-12T20:33:00.000Z",
+       :date_left=>"2014-10-12T20:51:00.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>nil,
        :page_url=>
         "http://arstechnica.com/gadgets/2014/10/guitar-hero-ars-builds",
-       :time_active=>"00:00:23",
-       :date_visited=>"2014-10-12T20:33:00.000Z"},
+       :total_time=>23,
+       :date_visited=>"2014-10-12T20:33:00.000Z",
+       :date_left=>"2014-10-12T20:56:00.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>"Technology Lab | Ars Technica",
        :page_url=>"http://arstechnica.com/information-technology/",
-       :time_active=>"00:00:02",
-       :date_visited=>"2014-10-12T20:34:00.000Z"},
+       :total_time=>2,
+       :date_visited=>"2014-10-12T20:34:00.000Z",
+       :date_left=>"2014-10-12T20:36:00.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>nil,
        :page_url=> "http://arstechnica.com/security/2014/10/snapchat-images",
-       :time_active=>"00:00:09",
-       :date_visited=>"2014-10-12T20:34:00.000Z"},
+       :total_time=>9,
+       :date_visited=>"2014-10-12T20:34:00.000Z",
+       :date_left=>"2014-10-12T20:43:00.000Z"},
       {:site_name=>"Ars Technica",
        :site_domain=>"arstechnica.com",
        :page_name=>"Why throw early and catch late? | Ars Technica",
        :page_url=>
         "http://arstechnica.com/information-technology/2014/10/why-throw-early",
-       :time_active=>"00:01:14",
-       :date_visited=>"2014-10-12T20:35:00.000Z"}]}],
+       :total_time=>74,
+       :date_visited=>"2014-10-12T20:35:00.000Z",
+       :date_left=>"2014-10-12T20:36:14.000Z"}]}],
  :entity=>"page_visits",
  :date_range=>
   {:date_begin=>"2014-10-11T00:00:00.000+00:00",
