@@ -59,6 +59,10 @@ module Analytics
       @filters[key] = value
     end
 
+    def remove_filter(key)
+      @filters.delete(key)
+    end
+
     private
 
     def process_filters

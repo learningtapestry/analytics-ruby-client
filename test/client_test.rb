@@ -62,6 +62,17 @@ module Analytics
         assert_equal expected_filters, agent.filters
       end
 
+      def test_remove_filters
+        agent = Agent.new
+        agent.add_filter(:date_start, '2014-01-13')
+        agent.add_filter(:date_end, '2015-01-13')
+
+        agent.remove_filter(:date_start)
+
+        expected_filters = {date_end: '2015-01-13'}
+        assert_equal expected_filters, agent.filters
+      end
+
       def test_sites
         agent = Agent.new(params)
         agent.entity = 'site_visits'
