@@ -75,7 +75,7 @@ lt_agent = Analytics::Agent.new
 lt_agent.org_api_key = '[API_KEY]'
 lt_agent.org_secret_key = '[SECRET]'
 lt_agent.entity = 'site_visits' # or page_visits
-lt_agent.add_username 'joesmith@foo.com' # Add to usernames array
+lt_agent.usernames = ['joesmith@foo.com'] # Array of usernames
 
 response = lt_agent.obtain
 puts response[:status]  # = HTTP status code, 200
@@ -98,6 +98,12 @@ lt_agent.add_filter :date_begin, '2014-10-01'
 lt_agent.add_filter :date_end, '2014-10-31'
 lt_agent.add_filter :site_domains, ['google.com'] # Array of site domains
 lt_agent.add_filter :page_urls, ['http://mail.google.com'] # Array of page urls
+```
+
+And to remove a filter you can use:
+
+```ruby
+lt_agent.remove_filter :date_begin
 ```
 
 # Result Examples
