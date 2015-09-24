@@ -47,7 +47,7 @@ module Analytics
       def test_add_username
         agent = Agent.new
 
-        agent.add_username 'user100'
+        agent.usernames = ['user100']
 
         assert_equal ['user100'], agent.usernames
       end

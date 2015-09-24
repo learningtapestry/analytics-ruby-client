@@ -19,7 +19,8 @@ module Analytics
     #
     # Attributes settable through custom methods
     #
-    attr_reader :filters, :usernames
+    attr_reader :filters
+    attr_accessor :usernames
 
     def initialize(params = {})
       conf = Configuration.new(params)
@@ -56,10 +57,6 @@ module Analytics
 
     def add_filter(key, value)
       @filters[key] = value
-    end
-
-    def add_username(username)
-      @usernames.push(username)
     end
 
     private
