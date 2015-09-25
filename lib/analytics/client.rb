@@ -31,7 +31,7 @@ module Analytics
       @org_secret_key = conf.option(:org_secret_key)
       @entity = conf.option(:entity)
 
-      @filters = Hash(conf.option(:filters))
+      @filters = conf.option(:filters) || {}
       @usernames = Array(conf.option(:usernames))
       @type = conf.option(:type)
     end
@@ -68,11 +68,11 @@ module Analytics
     def process_filters
       processed_filters = {}
 
-      %i(date_begin date_end).each do |filter|
+      [:date_begin, :date_end].each do |filter|
         processed_filters[filter] = filters[filter]
       end
 
-      %i(site_domains page_urls).each do |filter|
+      [:site_domains, :page_urls].each do |filter|
         processed_filters[filter] = filters[filter].join(',') if filters[filter]
       end
 

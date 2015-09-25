@@ -44,7 +44,7 @@ module Analytics
     # Symbolizes the keys of a hash
     #
     def symbolize_keys(hash)
-      Hash[hash.map { |k, v| [k.to_sym, v] }]
+      hash.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
     end
   end
 end
