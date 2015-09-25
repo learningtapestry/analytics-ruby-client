@@ -69,7 +69,7 @@ module Analytics
 
         agent.remove_filter(:date_start)
 
-        expected_filters = {date_end: '2015-01-13'}
+        expected_filters = { date_end: '2015-01-13' }
         assert_equal expected_filters, agent.filters
       end
 
