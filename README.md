@@ -15,16 +15,16 @@ Please see LICENSE for more details.
 
 # Requirements
 
-Ruby 2.0.0 or later
+Ruby 1.9.3 or later
 
 # Usage
 
 To use within an application
 
-* Install the gem
+* Inside your Gemfile add:
 
 ```ruby
-gem install analytics
+gem 'analytics', github: 'learningtapestry/analytics-ruby-client'
 ```
 
 * And remember to require it before using it:
