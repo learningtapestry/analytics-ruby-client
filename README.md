@@ -86,7 +86,10 @@ puts response[:date_range] # = date begin-end range of query, default 24 hours
 Optionally:
 
 ```ruby
-lt_agent.type = 'detail' # will obtain a detail listing by date
+lt_agent.type = 'summary' # (default) will obtain a summary of the visits. Total time is 
+                          # aggregated and visits are grouped by url/domain
+                          
+lt_agent.type = 'detail' # will obtain a detail listing with all individual visits
 ```
 
 # Filters
@@ -255,6 +258,7 @@ Page Visits - Detail:
    :date_end=>"2014-10-17T23:59:59"},
  :status=>200}
 ```
+Note: Total time is always specified in seconds
 
 # Contributing
 
