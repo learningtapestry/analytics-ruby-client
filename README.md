@@ -128,8 +128,8 @@ Site Vists - Summary:
        :total_time=>57}]}],
  :entity=>"site_visits",
  :date_range=>
-  {:date_begin=>"2014-10-01T00:00:00",
-   :date_end=>"2014-10-31T23:59:59"},
+  {:date_begin=>["2014-10-01T00:00:00"],
+   :date_end=>["2014-10-31T23:59:59"]},
  :status=>200}
 ```
 
@@ -161,8 +161,8 @@ Site Visits - Detail:
        :date_left=>"2014-10-12T15:57:36.000Z"}}],
  :entity=>"site_visits",
  :date_range=>
-  {:date_begin=>"2014-10-01T00:00:00",
-   :date_end=>"2014-10-31T23:59:59"},
+  {:date_begin=>["2014-10-01T00:00:00"],
+   :date_end=>["2014-10-31T23:59:59"]},
  :status=>200}
 ```
 
@@ -196,8 +196,8 @@ Page Visits - Summary:
        :total_time=>19}]}],
  :entity=>"page_visits",
  :date_range=>
-  {:date_begin=>"2014-10-11T00:00:00.000+00:00",
-   :date_end=>"2014-10-17T23:59:59"},
+  {:date_begin=>["2014-10-11T00:00:00.000+00:00"],
+   :date_end=>["2014-10-17T23:59:59"]},
  :status=>200}
 ```
 
@@ -254,8 +254,8 @@ Page Visits - Detail:
        :date_left=>"2014-10-12T20:36:14.000Z"}]}],
  :entity=>"page_visits",
  :date_range=>
-  {:date_begin=>"2014-10-11T00:00:00.000+00:00",
-   :date_end=>"2014-10-17T23:59:59"},
+  {:date_begin=>["2014-10-11T00:00:00.000+00:00"],
+   :date_end=>["2014-10-17T23:59:59"]},
  :status=>200}
 ```
 Note: Total time is always specified in seconds
