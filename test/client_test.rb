@@ -96,8 +96,8 @@ module Analytics
           '/api/v2/sites?org_api_key=param_key&org_secret_key=param_secret&' \
           'usernames=param_user1%2Cparam_user2&entity=site_visits&' \
           'type=detail&date_begin&date_end=2000-12-31',
-          timeout: timeout,
-          response_body: { entity: 'site_visits' }.to_json
+          timeout,
+          { entity: 'site_visits' }.to_json
         )
 
         agent = Agent.new(params.merge(timeout: timeout, use_ssl: false))
@@ -126,8 +126,8 @@ module Analytics
           '/api/v2/pages?org_api_key=param_key&org_secret_key=param_secret&' \
           'usernames=param_user1%2Cparam_user2&entity=page_visits&type=detail' \
           '&date_begin&date_end=2000-12-31',
-          timeout: timeout,
-          response_body: { entity: 'page_visits' }.to_json
+          timeout,
+          { entity: 'page_visits' }.to_json
         )
 
         agent = Agent.new(params.merge(timeout: timeout, use_ssl: false))
@@ -153,8 +153,8 @@ module Analytics
 
         stub_request_with_timeout(
           '/api/v2/users?org_api_key=param_key&org_secret_key=param_secret',
-          timeout: timeout,
-          response_body: { results: [{ username: 'Alex' }] }.to_json
+          timeout,
+          { results: [{ username: 'Alex' }] }.to_json
         )
 
         agent = Agent.new(params.merge(timeout: timeout, use_ssl: false))
@@ -175,7 +175,7 @@ module Analytics
         }
       end
 
-      def stub_request_with_timeout(path, timeout:, response_body:)
+      def stub_request_with_timeout(path, timeout, response_body)
         response = Net::HTTPResponse.new(nil, 200, nil)
         response.expects(:body).returns(response_body)
         http = mock
