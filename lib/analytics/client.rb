@@ -14,7 +14,7 @@ module Analytics
     # Attributes directly settable from outside the class
     #
     attr_accessor :api_base, :use_ssl, :org_api_key, :org_secret_key, :entity,
-                  :type
+                  :type, :timeout
 
     #
     # Attributes settable through custom methods
@@ -34,6 +34,7 @@ module Analytics
       @filters = conf.option(:filters) || {}
       @usernames = Array(conf.option(:usernames))
       @type = conf.option(:type)
+      @timeout = conf.option(:timeout)
     end
 
     def users
@@ -84,6 +85,7 @@ module Analytics
 
       http = Net::HTTP.new(uri.host, uri.port)
       add_ssl_options(http)
+      add_timeout_options(http)
 
       response = http.get(path_with_params(path, params))
 
@@ -98,6 +100,13 @@ module Analytics
       http.ssl_version = 'TLSv1'
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
+    def add_timeout_options(http)
+      return unless timeout
+
+      http.open_timeout = timeout
+      http.read_timeout = timeout
     end
 
     def path_with_params(path, params)

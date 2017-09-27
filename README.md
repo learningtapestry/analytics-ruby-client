@@ -46,13 +46,16 @@ or directly initialize it with parameters. Direct parameters have precedence
 over file configuration.
 
 ```ruby
-lt_agent = Analytics::Agent.new(api_base: '[API_BASE_URL]', # Defaults to https://api.learningtapestry.com
-                                use_ssl: [true|false], # Defaults to true
-                                org_api_key: '[API_KEY]',
-                                org_secret_key: '[SECRET]'
-                                entity: 'page_visits',
-                                filters: filters,
-                                usernames: usernames)
+lt_agent = Analytics::Agent.new(
+  api_base: '[API_BASE_URL]', # Defaults to https://api.learningtapestry.com
+  use_ssl: [true|false], # Defaults to true
+  org_api_key: '[API_KEY]',
+  org_secret_key: '[SECRET]'
+  entity: 'page_visits',
+  filters: filters,
+  usernames: usernames,
+  timeout: timeout # In seconds, can be float. Defaults to 60
+)
 ```
 
 # Queries
@@ -76,6 +79,7 @@ lt_agent.org_api_key = '[API_KEY]'
 lt_agent.org_secret_key = '[SECRET]'
 lt_agent.entity = 'site_visits' # or page_visits
 lt_agent.usernames = ['joesmith@foo.com'] # Array of usernames
+lt_agent.timeout = 7.5 # If the query times out, Timeout::Error will be raised
 
 response = lt_agent.obtain
 puts response[:status]  # = HTTP status code, 200
