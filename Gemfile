@@ -9,4 +9,5 @@ group :test do
   gem 'webmock', '~> 1.21'
   gem 'rubocop', '0.31.0'
   gem 'simplecov', '0.10.0'
+  gem 'mocha', '~> 1.3', require: false
 end
