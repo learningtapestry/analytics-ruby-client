@@ -1,6 +1,8 @@
 Analytics Ruby client library
 =============================
 
+[ ![Codeship Status for learningtapestry/analytics-ruby-client](https://app.codeship.com/projects/35322390-58a9-0133-bb86-521a4ddfa30e/status?branch=master)](https://app.codeship.com/projects/109775)
+
 # Overview
 
 This library aides in obtaining data from the Learning Tapestry APIs.  You must
